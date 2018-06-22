@@ -8,25 +8,16 @@
             <span class="sortby">Sort by:</span>
             <a href="javascript:void(0)" class="default cur">Default</a>
             <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
-            <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
+            <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a><!-- 点击弹出遮罩 -->
           </div>
           <div class="accessory-result">
             <!-- filter -->
-            <div class="filter stopPop" id="filter">
+            <div class="filter stopPop" id="filter" :class="{'filterby-show':filterBy}"><!-- 小屏时的做法 -->
               <dl class="filter-price">
                 <dt>Price:</dt>
-                <dd><a href="javascript:void(0)">All</a></dd>
-                <dd>
-                  <a href="javascript:void(0)">0 - 100</a>
-                </dd>
-                <dd>
-                  <a href="javascript:void(0)">100 - 500</a>
-                </dd>
-                <dd>
-                  <a href="javascript:void(0)">500 - 1000</a>
-                </dd>
-                <dd>
-                  <a href="javascript:void(0)">1000 - 2000</a>
+                <dd><a href="javascript:void(0)" :class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a></dd> <!-- 默认选中all -->
+                <dd v-for="(price,index) in priceFilter" @click="priceChecked=index"> <!-- 把索引给flag -->
+                  <a href="javascript:void(0)" v-bind:class="{'cur':priceChecked==index}" >{{price.startPrice}} - {{price.endPrice}}</a>
                 </dd>
               </dl>
             </div>
@@ -53,6 +44,7 @@
           </div>
         </div>
       </div>
+      <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
       <nav-footer></nav-footer>
     </div>
 </template>
@@ -66,7 +58,28 @@
     export default{
         data(){
             return {
-              goodsList:[]
+              goodsList:[],
+              priceFilter:[
+                {
+                  startPrice:'0.00',
+                  endPrice:'100.00'
+                },
+                 {
+                  startPrice:'100.00',
+                  endPrice:'500.00'
+                },
+                {
+                  startPrice:'500.00',
+                  endPrice:'1000.00'
+                },
+                {
+                  startPrice:'1000.00',
+                  endPrice:'2000.00'
+                },
+              ],
+              priceChecked:'all',
+              filterBy:false,//定义小屏价格窗口是否弹出
+              overLayFlag:false //遮罩
             }
         },
         components:{
@@ -84,6 +97,19 @@
               console.log(res);
               this.goodsList =res.result;
             })
+          },
+          //显示filterby的小屏右侧划窗显示价格选择
+          showFilterPop() {
+            this.filterBy = true;
+            this.overLayFlag = true;
+          },
+          // setPriceFilter(index) {
+          //   priceChecked = index;
+          // },
+          //关闭遮罩
+          closePop() {
+            this.filterBy = false;
+            this.overLayFlag = false;
           }
         }
     }
