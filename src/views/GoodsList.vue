@@ -8,7 +8,7 @@
             <span class="sortby">Sort by:</span>
             <a href="javascript:void(0)" class="default cur">Default</a>
             <a href="javascript:void(0)" class="price">Price <svg class="icon icon-arrow-short"><use xlink:href="#icon-arrow-short"></use></svg></a>
-            <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a><!-- 点击弹出遮罩 -->
+            <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a><!-- 点击弹出遮罩 filterby类 小屏时会出现 -->
           </div>
           <div class="accessory-result">
             <!-- filter -->
@@ -28,7 +28,8 @@
                 <ul>
                   <li v-for="(item,index) in goodsList">
                     <div class="pic">
-                      <a href="#"><img v-bind:src="'static/'+item.productImg" alt=""></a>
+                      <!--图片懒加载v-lazy 替换 v-bind:src  -->
+                      <a href="#"><img v-lazy="'static/'+item.productImg" alt=""></a>
                     </div>
                     <div class="main">
                       <div class="name">{{item.productName}}</div>
