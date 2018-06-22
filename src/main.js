@@ -11,6 +11,7 @@ Vue.config.productionTip = false
 Vue.use(VueLazyLoad,{
 	loading:"/static/loading-svg/loading-spokes.svg"
 });
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

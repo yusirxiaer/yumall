@@ -92,6 +92,7 @@
           this.getGoodsList();
         },
         methods:{
+          // 货品
           getGoodsList(){
             axios.get('/api/goods').then((result)=>{
               var res = result.data;
