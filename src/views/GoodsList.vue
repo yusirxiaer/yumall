@@ -16,8 +16,8 @@
               <dl class="filter-price">
                 <dt>Price:</dt>
                 <dd><a href="javascript:void(0)" :class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a></dd> <!-- 默认选中all -->
-                <dd v-for="(price,index) in priceFilter" @click="priceChecked=index"> <!-- 把索引给flag -->
-                  <a href="javascript:void(0)" v-bind:class="{'cur':priceChecked==index}" >{{price.startPrice}} - {{price.endPrice}}</a>
+                <dd v-for="(price,index) in priceFilter"> <!-- 把索引给flag -->
+                  <a href="javascript:void(0)" @click="setPriceFilter(index)" v-bind:class="{'cur':priceChecked==index}" >{{price.startPrice}} - {{price.endPrice}}</a>
                 </dd>
               </dl>
             </div>
@@ -103,9 +103,11 @@
             this.filterBy = true;
             this.overLayFlag = true;
           },
-          // setPriceFilter(index) {
-          //   priceChecked = index;
-          // },
+          //选中价格区间，点击关闭遮罩
+          setPriceFilter(index) {
+            this.priceChecked = index;
+            this.closePop();
+          },
           //关闭遮罩
           closePop() {
             this.filterBy = false;
